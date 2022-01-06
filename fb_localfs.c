@@ -48,6 +48,7 @@
 #ifdef HAVE_AIO
 #include <aio.h>
 #endif /* HAVE_AIO */
+#include <sys/random.h>
 
 /*
  * These routines implement local file access. They are placed into a
@@ -639,6 +640,13 @@ fb_lfs_pwrite(fb_fdesc_t *fd, caddr_t iobuf, fbint_t iosize, off64_t offset)
 static int
 fb_lfs_write(fb_fdesc_t *fd, caddr_t iobuf, fbint_t iosize)
 {
+	
+//	memset(iobuf,0, sizeof(iobuf));
+	
+	int copy_num=getrandom(iobuf,iosize,GRND_RANDOM);
+
+	 memset(iobuf,0,iosize*3/4 );	
+
 	return (write(fd->fd_num, iobuf, iosize));
 }
 
