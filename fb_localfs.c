@@ -631,6 +631,10 @@ fb_lfs_stat(char *path, struct stat64 *statbufp)
 static int
 fb_lfs_pwrite(fb_fdesc_t *fd, caddr_t iobuf, fbint_t iosize, off64_t offset)
 {
+//pwrite() with random data
+	
+	int copy_numi_p=getrandom(iobuf,iosize,GRND_RANDOM);
+	 memset(iobuf,0,iosize*3/4 ); 
 	return (pwrite64(fd->fd_num, iobuf, iosize, offset));
 }
 
